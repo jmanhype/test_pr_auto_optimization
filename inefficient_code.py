@@ -8,13 +8,21 @@ import time
 def slow_fibonacci(n: int) -> int:
     """
     Calculate the nth Fibonacci number using a very inefficient recursive approach.
-    
+
     Args:
         n: The position in the Fibonacci sequence to calculate
-        
+
     Returns:
         The nth Fibonacci number
+
+    Raises:
+        ValueError: If n is negative
+        TypeError: If n is not an integer
     """
+    if not isinstance(n, int):
+        raise TypeError(f"Expected integer, got {type(n).__name__}")
+    if n < 0:
+        raise ValueError(f"Fibonacci is not defined for negative numbers: {n}")
     if n <= 1:
         return n
     return slow_fibonacci(n-1) + slow_fibonacci(n-2)
@@ -23,13 +31,21 @@ def slow_fibonacci(n: int) -> int:
 def inefficient_string_concatenation(n: int) -> str:
     """
     Build a long string by repeatedly concatenating in a loop.
-    
+
     Args:
         n: The number of strings to concatenate
-        
+
     Returns:
         The concatenated string
+
+    Raises:
+        ValueError: If n is negative
+        TypeError: If n is not an integer
     """
+    if not isinstance(n, int):
+        raise TypeError(f"Expected integer, got {type(n).__name__}")
+    if n < 0:
+        raise ValueError(f"n must be non-negative, got {n}")
     result = ""
     for i in range(n):
         result = result + str(i) + "-"
@@ -39,14 +55,19 @@ def inefficient_string_concatenation(n: int) -> str:
 def slow_search(items: List[Any], target: Any) -> bool:
     """
     Perform a linear search through the list.
-    
+
     Args:
         items: List to search through
         target: Item to find
-        
+
     Returns:
         True if the item is found, False otherwise
+
+    Raises:
+        TypeError: If items is not a list
     """
+    if not isinstance(items, list):
+        raise TypeError(f"items must be a list, got {type(items).__name__}")
     found = False
     for item in items:
         if item == target:
@@ -58,36 +79,55 @@ def slow_search(items: List[Any], target: Any) -> bool:
 def nested_loops_processing(data: List[int]) -> List[int]:
     """
     Process data using nested loops instead of list comprehensions.
-    
+
     Args:
         data: List of integers to process
-        
+
     Returns:
         Processed list of squared even numbers
+
+    Raises:
+        TypeError: If data is not a list or contains non-integers
     """
+    if not isinstance(data, list):
+        raise TypeError(f"data must be a list, got {type(data).__name__}")
+    if not all(isinstance(item, int) for item in data):
+        raise TypeError("All items in data must be integers")
+
     filtered = []
     for item in data:
         if item % 2 == 0:
             filtered.append(item)
-    
+
     result = []
     for item in filtered:
         result.append(item * item)
-    
+
     return result
 
 
 def repeated_calculations(data: List[int], threshold: int = 10) -> Dict[int, float]:
     """
     Perform repeated calculations on the same data multiple times.
-    
+
     Args:
         data: Input data to process
         threshold: Minimum value to include in results
-        
+
     Returns:
         Dictionary mapping values to their processed results
+
+    Raises:
+        TypeError: If data is not a list or contains non-integers
+        ValueError: If threshold is negative or data is empty when needed
     """
+    if not isinstance(data, list):
+        raise TypeError(f"data must be a list, got {type(data).__name__}")
+    if not all(isinstance(item, (int, float)) for item in data):
+        raise TypeError("All items in data must be numeric")
+    if threshold < 0:
+        raise ValueError(f"threshold must be non-negative, got {threshold}")
+
     results = {}
     for i, value in enumerate(data):
         if len(data) > threshold:  # Repeated calculation of len(data)
@@ -116,11 +156,19 @@ class InefficientClass:
     
     def __init__(self, name: str, values: Optional[List[int]] = None):
         """Initialize with a name and optional values.
-        
+
         Args:
             name: The name of this instance
             values: Optional list of values
+
+        Raises:
+            TypeError: If name is not a string or values is not a list
         """
+        if not isinstance(name, str):
+            raise TypeError(f"name must be a string, got {type(name).__name__}")
+        if values is not None and not isinstance(values, list):
+            raise TypeError(f"values must be a list or None, got {type(values).__name__}")
+
         self.name = name
         self.values = values or []
         self.processed = {}
